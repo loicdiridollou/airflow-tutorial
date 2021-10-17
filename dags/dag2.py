@@ -11,14 +11,14 @@ def t1():
 
 def _choose_best_model(ti):
     best_accuracy = max(ti.xcom_pull(task_ids=['training_a', 'training_b', 'training_c']))
-    # print(ti.xcom_pull(task_ids=['training_a', 'training_b', 'training_c']))
+    print(ti.xcom_pull(task_ids=['training_a', 'training_b', 'training_c']))
     if best_accuracy > 7.5:
         return 'accurate1'
     else:
         return 'inaccurate1'
 
 
-with DAG('dag23', start_date=datetime(2021, 10, 15), schedule_interval='26 18 * * *', catchup=False) as dag:
+with DAG('dag_with_display', start_date=datetime(2021, 10, 15), schedule_interval='26 18 * * *', catchup=False) as dag:
     training_model_a = PythonOperator(
         task_id='training_a',
         python_callable=t1
