@@ -3,9 +3,16 @@ from airflow.operators.python import BranchPythonOperator, PythonOperator
 from airflow.operators.bash import BashOperator
 from datetime import datetime
 from random import randint
-
+import time
 
 def t1():
+    return randint(1, 10)
+
+
+def t1_with_wait():
+    for i in range(10):
+        print(i)
+        time.sleep(1)
     return randint(1, 10)
 
 
@@ -29,7 +36,7 @@ with DAG('dag_with_display', start_date=datetime(2021, 10, 15), schedule_interva
     )
     training_model_c = PythonOperator(
         task_id='training_c',
-        python_callable=t1
+        python_callable=t1_with_wait
     )
     choose_best = BranchPythonOperator(
         task_id='choose_best',
