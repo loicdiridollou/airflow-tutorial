@@ -34,9 +34,7 @@ with DAG('dag_with_display', start_date=datetime(2021, 10, 15), schedule_interva
     choose_best = BranchPythonOperator(
         task_id='choose_best',
         python_callable=_choose_best_model,
-
     )
-
     accurate = BashOperator(
         task_id='accurate1',
         bash_command="echo 'accurate'"
